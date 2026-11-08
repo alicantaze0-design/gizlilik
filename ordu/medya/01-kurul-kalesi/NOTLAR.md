@@ -8,6 +8,8 @@ Ordu sayfası için deneme Reel'i. İki versiyon var: 2D çizgi roman ve foto ge
 |---|---|
 | `Kurul-Kalesi-2D-paylasim.mp4` | 2D versiyon, son altyazı konumu (~23 MB) |
 | `Kurul-Kalesi-Foto-paylasim.mp4` | Foto gerçekçi versiyon, son altyazı konumu (~23 MB) |
+| `Kurul-Kalesi-2D-ordudefteri.mp4` | 2D versiyon, "ordu defteri" filigranlı, paylaşıma hazır (~23 MB) |
+| `Kurul-Kalesi-Foto-ordudefteri.mp4` | Foto gerçekçi versiyon, "ordu defteri" filigranlı, paylaşıma hazır (~23 MB) |
 | `Kontak-2d.jpg` | 2D versiyonun 8 sahnelik kontak sayfası |
 | `Kontak-foto.jpg` | Foto gerçekçi versiyonun 8 sahnelik kontak sayfası |
 | `2d/img/01–08.jpg` | 2D sahne görselleri (9:16) |
