@@ -46,11 +46,14 @@ def seslendirme(d, test):
         else: os.remove(t)
     return [sure(f"{d}/tts/{s['no']:02d}.wav") for s in SAHNE]
 
+DINAMIK = True; BPM = 100
 def zamanlama(ses_sureleri):
-    ON, ARA, SON = 0.20, 0.45, 1.4
+    ON, ARA, SON = (0.15, 0.3, 1.6) if DINAMIK else (0.20, 0.45, 1.4)
+    yarim = 60 / BPM / 2
     plan, t = [], 0.0
     for i, v in enumerate(ses_sureleri):
         dur = ON + v + (SON if i == len(ses_sureleri) - 1 else ARA)
+        if DINAMIK: dur = math.ceil(dur / yarim) * yarim
         plan.append({"bas": t, "ses_bas": t + ON, "ses": v, "sure": dur}); t += dur
     return plan
 
@@ -91,6 +94,16 @@ def veo_klipler(d, surum):
 # ---------- 3. Sahne segmentleri ----------
 HAREKET = ["in", "up", "in", "out", "down", "in", "up", "in"]
 def segment(d, surum, s, dur):
+    out = _segment(d, surum, s, dur)
+    if not DINAMIK or dur < 3: return out
+    yarim = 60 / BPM / 2; kes = round((dur / 2) / yarim) * yarim
+    son = out.replace(".mp4", "_d.mp4")
+    fc = (f"[0:v]split[a][b];[a]trim=0:{kes},setpts=PTS-STARTPTS[a1];"
+          f"[b]trim={kes}:{dur},setpts=PTS-STARTPTS,scale=iw*1.12:ih*1.12,crop={W}:{H},setsar=1[b1];[a1][b1]concat=n=2:v=1[v]")
+    sh("ffmpeg", "-y", "-i", out, "-filter_complex", fc, "-map", "[v]", "-c:v", "libx264", "-crf", "18", "-preset", "veryfast", "-pix_fmt", "yuv420p", son)
+    return son
+
+def _segment(d, surum, s, dur):
     n = s["no"]; out = f"{d}/{surum}/seg/{n:02d}.mp4"; os.makedirs(os.path.dirname(out), exist_ok=True)
     vid = f"{d}/{surum}/vid/{n:02d}.mp4"
     frames = int(round(dur * FPS))
@@ -158,12 +171,22 @@ def miks(d, plan, test):
     with wave.open(f"{d}/anlatim.wav", "wb") as w:
         w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR)
         w.writeframes((np.clip(ses, -1, 1) * 32767).astype(np.int16).tobytes())
-    muzik(plan, f"{d}/muzik.wav")
-    fc = ("[1:a]volume=-21dB[m];[0:a]aformat=channel_layouts=stereo[v];"
-          "[m][v]sidechaincompress=threshold=0.05:ratio=4:attack=20:release=400[md];"
-          "[v][md]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
-    if test: fc = "[1:a]volume=-21dB,loudnorm=I=-14:TP=-1.5[a]"
-    sh("ffmpeg", "-y", "-i", f"{d}/anlatim.wav", "-i", f"{d}/muzik.wav", "-filter_complex", fc,
+    if DINAMIK:
+        import muzik_dinamik, sfx
+        sureler = [p["sure"] for p in plan]
+        muzik_dinamik.muzik_uret(sureler, f"{d}/muzik.wav", bpm=BPM); sfx.sfx_uret(sureler, f"{d}/sfx.wav")
+        fc = ("[1:a]volume=-17dB[m];[2:a]volume=-15dB[x];[0:a]aformat=channel_layouts=stereo,asplit=3[v][vs1][vs2];"
+              "[m][vs1]sidechaincompress=threshold=0.04:ratio=5:attack=15:release=350[md];"
+              "[x][vs2]sidechaincompress=threshold=0.06:ratio=2.5:attack=10:release=250[xd];"
+              "[v][md][xd]amix=inputs=3:duration=longest:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
+        girdiler = ["-i", f"{d}/anlatim.wav", "-i", f"{d}/muzik.wav", "-i", f"{d}/sfx.wav"]
+    else:
+        muzik(plan, f"{d}/muzik.wav")
+        fc = ("[1:a]volume=-21dB[m];[0:a]aformat=channel_layouts=stereo[v];"
+              "[m][v]sidechaincompress=threshold=0.05:ratio=4:attack=20:release=400[md];"
+              "[v][md]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
+        girdiler = ["-i", f"{d}/anlatim.wav", "-i", f"{d}/muzik.wav"]
+    sh("ffmpeg", "-y", *girdiler, "-filter_complex", fc,
        "-map", "[a]", "-ar", "48000", "-t", f"{T:.3f}", f"{d}/miks.wav")
 
 # ---------- 6. Altyazı ----------
@@ -177,7 +200,7 @@ def altyazi(plan, yol):
            "[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, "
            "Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, "
            "Alignment, MarginL, MarginR, MarginV, Encoding\n"
-           "Style: A,DejaVu Sans,74,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,-1,0,0,0,100,100,0,0,1,5,2,2,80,80,700,1\n\n"
+           "Style: A,Merriweather Black,68,&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0,0,0,0,100,100,0,0,1,5,3,2,70,70,560,1\n\n"
            "[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n")
     satir = []
     for s, p in zip(SAHNE, plan):
@@ -198,7 +221,7 @@ def altyazi(plan, yol):
                 c = temiz(k)
                 sari = c in tokens or any(len(tk) >= 4 and c.startswith(tk) for tk in tokens)
                 parca.append("{\\c&H0000D7FF&}" + k + "{\\c&H00FFFFFF&}" if sari else k)
-            satir.append(f"Dialogue: 0,{ass_zaman(t)},{ass_zaman(t + dt)},A,,0,0,0,,{' '.join(parca)}")
+            satir.append(f"Dialogue: 0,{ass_zaman(t)},{ass_zaman(t + dt)},A,,0,0,0,,{{\\fscx86\\fscy86\\t(0,90,\\fscx100\\fscy100)}}{' '.join(parca)}")
             t += dt
     open(yol, "w", encoding="utf-8").write(bas + "\n".join(satir) + "\n")
 
@@ -225,8 +248,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cikti", required=True); ap.add_argument("--surum", default="hepsi")
     ap.add_argument("--veo", action="store_true"); ap.add_argument("--test", action="store_true")
+    ap.add_argument("--sakin", action="store_true", help="eski sakin müzik ve düz kurgu")
     ap.add_argument("--filigran", default=os.path.join(BURADA, "../../hesap/gorseller/filigran.png"))
     a = ap.parse_args(); d = a.cikti; os.makedirs(d, exist_ok=True)
+    global DINAMIK; DINAMIK = not a.sakin
     surumler = ["2d", "foto"] if a.surum == "hepsi" else [a.surum]
     if not a.test: sys.path.insert(0, BURADA)
     print("1) Seslendirme"); ses_s = seslendirme(d, a.test); plan = zamanlama(ses_s)
@@ -243,8 +268,9 @@ def main():
         ad = {"2d": "2D", "foto": "Foto-Gercekci"}[v]
         son = f"{d}/Kurul-Kalesi-{ad}.mp4"
         fil = os.path.abspath(a.filigran) if a.filigran and os.path.exists(a.filigran) else None
-        fc = (f"[0:v]ass={d}/altyazi.ass[v1];[2:v]scale=330:-1,format=rgba,colorchannelmixer=aa=0.8[wm];"
-              f"[v1][wm]overlay=(W-w)/2:120[v]") if fil else f"[0:v]ass={d}/altyazi.ass[v]"
+        fd = os.path.abspath(os.path.join(BURADA, "../../hesap/varlik/fonts"))
+        fc = (f"[0:v]ass={d}/altyazi.ass:fontsdir={fd}[v1];[2:v]scale=330:-1,format=rgba,colorchannelmixer=aa=0.8[wm];"
+              f"[v1][wm]overlay=(W-w)/2:120[v]") if fil else f"[0:v]ass={d}/altyazi.ass:fontsdir={fd}[v]"
         sh("ffmpeg", "-y", "-i", f"{d}/{v}/goruntu.mp4", "-i", f"{d}/miks.wav", *(["-i", fil] if fil else []),
            "-filter_complex", fc, "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-crf", "21",
            "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-shortest",

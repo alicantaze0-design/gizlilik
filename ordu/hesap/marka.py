@@ -52,7 +52,7 @@ pro.paste(art, (0, -20), art); pro.save(f"{OUT}/profil.png")
 
 # 2) Filigran (şeffaf)
 fw, fh = 900, 220; fil = Image.new("RGBA", (fw, fh), (0, 0, 0, 0)); d = ImageDraw.Draw(fil)
-f = F("Playfair-800", 120); t = "ordu defteri"; tw = d.textlength(t, font=f)
+f = F("Merriweather-900", 104); t = "ordu defteri"; tw = d.textlength(t, font=f)
 golge = Image.new("RGBA", (fw, fh), (0, 0, 0, 0)); ImageDraw.Draw(golge).text(((fw - tw) / 2, 30), t, font=f, fill=(0, 0, 0, 150))
 golge = golge.filter(ImageFilter.GaussianBlur(6)); fil = Image.alpha_composite(fil, golge); d = ImageDraw.Draw(fil)
 d.text(((fw - tw) / 2, 30), t, font=f, fill=(255, 255, 255, 215)); fil = fil.crop(fil.getbbox()); fil.save(f"{OUT}/filigran.png")
@@ -68,14 +68,14 @@ for ad, ik in ikonlar:
 # 4) Açılış karuseli (1080x1350)
 W, H = 1080, 1350
 s1 = kagit_doku(W, H); a = svg_png(sahne_svg(False), 900, 900); s1.paste(a, (90, 330), a); d = ImageDraw.Draw(s1)
-ortala(d, 120, "Ordu Defteri", F("Playfair-800", 132), MUREKKEP, W)
+ortala(d, 120, "Ordu Defteri", F("Merriweather-900", 104), MUREKKEP, W)
 ortala(d, 290, "Önünden geçip hikâyesini", F("SourceSans-600", 52), SEPYA, W)
 ortala(d, 352, "bilmediğimiz yerler", F("SourceSans-600", 52), SEPYA, W)
 ortala(d, 1230, "kaydır  »", F("SourceSans-400", 40), MUREKKEP, W)
 s1.save(f"{OUT}/acilis-1.png")
 
 s2 = kagit_doku(W, H); d = ImageDraw.Draw(s2)
-ortala(d, 110, "Bu defterde neler var?", F("Playfair-800", 76), MUREKKEP, W)
+ortala(d, 110, "Bu defterde neler var?", F("Merriweather-900", 60), MUREKKEP, W)
 diziler = [("castle", "Önünden geçtiğimiz yer", "Tanıdık yerlerin bilinmeyen hikâyesi"),
            ("signpost", "Adının hikâyesi", "Köy, mahalle ve ilçe adlarının kökeni"),
            ("scroll", "Arşivden", "Eski fotoğraflarla o zaman ve şimdi"),
@@ -85,20 +85,20 @@ y = 290
 for ik, bas, alt in diziler:
     svg = open(f"{IKON}/{ik}.svg").read().replace('stroke="currentColor"', f'stroke="{TURKUAZ}"')
     svg = re.sub(r'stroke-width="[\d.]+"', 'stroke-width="2"', svg); ic = svg_png(svg, 110, 110); s2.paste(ic, (110, y), ic)
-    d.text((260, y + 2), bas, font=F("Playfair-700", 54), fill=MUREKKEP)
+    d.text((260, y + 2), bas, font=F("Merriweather-700", 44), fill=MUREKKEP)
     d.text((260, y + 68), alt, font=F("SourceSans-400", 40), fill=SEPYA); y += 175
 ortala(d, 1200, "Her akşam 20.30'da yeni bir sayfa", F("SourceSans-600", 46), TURKUAZ, W)
 s2.save(f"{OUT}/acilis-2.png")
 
 s3 = kagit_doku(W, H); d = ImageDraw.Draw(s3)
 ortala(d, 150, "İlk sayfa:", F("SourceSans-600", 56), SEPYA, W)
-ortala(d, 230, "Kurul Kalesi", F("Playfair-800", 128), MUREKKEP, W)
+ortala(d, 230, "Kurul Kalesi", F("Merriweather-900", 100), MUREKKEP, W)
 for i, sat in enumerate(["Ordu'dan sadece 13 km uzakta,", "sivri bir kayanın tepesinde,", "2.000 yıl önce bir kale yandı.", "Ve oraya bir daha", "kimse yerleşmedi."]):
     ortala(d, 470 + i * 78, sat, F("SourceSans-400", 52), MUREKKEP, W)
 d.rounded_rectangle((140, 930, 940, 1150), radius=28, fill=TURKUAZ)
 ortala(d, 965, "Sizin bildiğiniz bir hikâye mi var?", F("SourceSans-600", 44), KAGIT, W)
 ortala(d, 1030, "Yorumlara yazın,", F("SourceSans-600", 44), KAGIT, W)
 ortala(d, 1085, "defteri birlikte dolduralım.", F("SourceSans-600", 44), KAGIT, W)
-ortala(d, 1230, "@ordudefteri", F("Playfair-700", 48), MUREKKEP, W)
+ortala(d, 1230, "@ordudefteri", F("Merriweather-700", 42), MUREKKEP, W)
 s3.save(f"{OUT}/acilis-3.png")
 print("tamam")

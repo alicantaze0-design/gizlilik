@@ -4,7 +4,8 @@ import os
 from fontTools.ttLib import TTFont
 from fontTools.merge import Merger
 B = os.path.dirname(os.path.abspath(__file__)); K = f"{B}/fonts/kaynak"; O = f"{B}/fonts"
-for ad, w, hedef in [("playfair-display", 800, "Playfair-800"), ("playfair-display", 700, "Playfair-700"),
+for ad, w, hedef in [("merriweather", 900, "Merriweather-900"), ("merriweather", 700, "Merriweather-700"),
+                     ("playfair-display", 800, "Playfair-800"), ("playfair-display", 700, "Playfair-700"),
                      ("source-sans-3", 600, "SourceSans-600"), ("source-sans-3", 400, "SourceSans-400")]:
     if os.path.exists(f"{O}/{hedef}.ttf"): continue
     parca = []

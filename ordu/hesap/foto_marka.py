@@ -76,14 +76,14 @@ def main():
     # Karusel 1
     s = gradyan(renk_birlik(kirp(Image.open(f"{GIR}/bg-1.png").convert("RGB"), W, H)), ust=0.75, alt=0.55)
     d = ImageDraw.Draw(s, "RGBA")
-    yaz(d, 120, "Ordu Defteri", F("Playfair-800", 132), KREM, W)
+    yaz(d, 120, "Ordu Defteri", F("Merriweather-900", 104), KREM, W)
     yaz(d, 300, "Önünden geçip hikâyesini", F("SourceSans-600", 52), ALTIN, W)
     yaz(d, 362, "bilmediğimiz yerler", F("SourceSans-600", 52), ALTIN, W)
     yaz(d, 1235, "kaydır  »", F("SourceSans-400", 40), KREM, W)
     s.save(f"{OUT}/acilis-1.png", quality=93)
     # Karusel 2
     s = Image.blend(renk_birlik(kirp(Image.open(f"{GIR}/bg-2.png").convert("RGB"), W, H)), Image.new("RGB", (W, H), (10, 8, 6)), 0.55)
-    d = ImageDraw.Draw(s, "RGBA"); yaz(d, 110, "Bu defterde neler var?", F("Playfair-800", 76), KREM, W)
+    d = ImageDraw.Draw(s, "RGBA"); yaz(d, 110, "Bu defterde neler var?", F("Merriweather-900", 60), KREM, W)
     y = 290
     for ik, bas, alt in [("castle", "Önünden geçtiğimiz yer", "Tanıdık yerlerin bilinmeyen hikâyesi"),
                          ("signpost", "Adının hikâyesi", "Köy, mahalle ve ilçe adlarının kökeni"),
@@ -91,7 +91,7 @@ def main():
                          ("drama", "Perde arkası", "Ordu sahnesinin 60 yıllık hafızası"),
                          ("map-pin", "Ordulu sordu", "Sizin sorularınızın cevabı")]:
         i = ikon(ik, ALTIN, 110); s.paste(i, (110, y), i)
-        d.text((260, y + 2), bas, font=F("Playfair-700", 54), fill=KREM)
+        d.text((260, y + 2), bas, font=F("Merriweather-700", 44), fill=KREM)
         d.text((260, y + 68), alt, font=F("SourceSans-400", 40), fill=ALTIN); y += 175
     yaz(d, 1200, "Her akşam 20.30'da yeni bir sayfa", F("SourceSans-600", 46), ALTIN, W)
     s.save(f"{OUT}/acilis-2.png", quality=93)
@@ -99,11 +99,11 @@ def main():
     s = gradyan(renk_birlik(kirp(Image.open(f"{GIR}/bg-3.png").convert("RGB"), W, H)), ust=0.8, alt=0.85)
     d = ImageDraw.Draw(s, "RGBA")
     yaz(d, 120, "İlk sayfa:", F("SourceSans-600", 56), ALTIN, W)
-    yaz(d, 195, "Kurul Kalesi", F("Playfair-800", 128), KREM, W)
+    yaz(d, 195, "Kurul Kalesi", F("Merriweather-900", 100), KREM, W)
     for k, sat in enumerate(["Ordu'dan sadece 13 km uzakta,", "2.000 yıl önce bir kale yandı.", "Ve oraya bir daha kimse yerleşmedi."]):
         yaz(d, 960 + k * 66, sat, F("SourceSans-600", 46), KREM, W)
     yaz(d, 1180, "Bildiğiniz bir hikâye varsa yorumlara yazın", F("SourceSans-400", 40), ALTIN, W)
-    yaz(d, 1250, "@ordudefteri", F("Playfair-700", 44), KREM, W)
+    yaz(d, 1250, "@ordudefteri", F("Merriweather-700", 40), KREM, W)
     s.save(f"{OUT}/acilis-3.png", quality=93)
     print("foto marka seti hazır:", OUT)
 

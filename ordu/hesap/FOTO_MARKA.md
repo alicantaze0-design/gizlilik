@@ -16,7 +16,7 @@ Bu yüzden önerim **"fotoğraf gerçekçi amblem"**: tek bir nesnenin yakın ç
 | B · Kale silueti | Alacakaranlıkta sivri kaya ve kale kalıntısı, altın gökyüzü | Etkileyici, Kurul Kalesi ile güçlü bağ | Tek bir yere bağlanır, küçükte manzara lekesi olur |
 | C · Defter ve fındık | Açık eski defter, üstünde fındık dalı ve eski Ordu kartpostalı | Ordu'yu en çok anlatan | Kalabalık, küçükte okunmaz |
 
-**Tipografi değişmiyor:** Filigran ve başlıklardaki "ordu defteri" yazısı Playfair Display serif olarak kalıyor. Yazı fotoğraf gerçekçi yapılmaz. Yazının keskin ve her boyutta okunur kalması gerekir. Foto gerçekçilik görsellerde, tipografi yazıda.
+**Tipografi değişmiyor:** Filigran ve başlıklardaki "ordu defteri" yazısı Merriweather Black (altyazıyla aynı aile) olarak kullanılıyor. Yazı fotoğraf gerçekçi yapılmaz. Yazının keskin ve her boyutta okunur kalması gerekir. Foto gerçekçilik görsellerde, tipografi yazıda.
 
 **Bütünlük kuralları:**
 - Tüm marka fotoğraflarında aynı ışık: sıcak, sol üstten pencere ışığı. Aynı palet: koyu kahve, Karadeniz turkuazı, altın.
