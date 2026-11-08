@@ -225,6 +225,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cikti", required=True); ap.add_argument("--surum", default="hepsi")
     ap.add_argument("--veo", action="store_true"); ap.add_argument("--test", action="store_true")
+    ap.add_argument("--filigran", default=os.path.join(BURADA, "../../hesap/gorseller/filigran.png"))
     a = ap.parse_args(); d = a.cikti; os.makedirs(d, exist_ok=True)
     surumler = ["2d", "foto"] if a.surum == "hepsi" else [a.surum]
     if not a.test: sys.path.insert(0, BURADA)
@@ -241,8 +242,11 @@ def main():
         sh("ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", f"{d}/{v}/goruntu.mp4")
         ad = {"2d": "2D", "foto": "Foto-Gercekci"}[v]
         son = f"{d}/Kurul-Kalesi-{ad}.mp4"
-        sh("ffmpeg", "-y", "-i", f"{d}/{v}/goruntu.mp4", "-i", f"{d}/miks.wav",
-           "-vf", f"ass={d}/altyazi.ass", "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-crf", "21",
+        fil = os.path.abspath(a.filigran) if a.filigran and os.path.exists(a.filigran) else None
+        fc = (f"[0:v]ass={d}/altyazi.ass[v1];[2:v]scale=330:-1,format=rgba,colorchannelmixer=aa=0.8[wm];"
+              f"[v1][wm]overlay=(W-w)/2:120[v]") if fil else f"[0:v]ass={d}/altyazi.ass[v]"
+        sh("ffmpeg", "-y", "-i", f"{d}/{v}/goruntu.mp4", "-i", f"{d}/miks.wav", *(["-i", fil] if fil else []),
+           "-filter_complex", fc, "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-crf", "21",
            "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-shortest",
            "-movflags", "+faststart", son)
         kontak(d, v, f"{d}/Kurul-Kalesi-{ad}-kareler.jpg"); kapak(d, v, f"{d}/Kurul-Kalesi-{ad}-kapak.jpg")

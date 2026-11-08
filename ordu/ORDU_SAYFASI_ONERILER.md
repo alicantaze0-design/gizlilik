@@ -23,7 +23,10 @@ Hazırlayan: Claude · Ali Can Taze için · 08.11.2026
 
 ---
 
-## 2. Sayfa adı önerileri
+## 2. Sayfa adı: **Ordu Defteri (@ordudefteri)** seçildi (08.11.2026)
+Hesap açılış rehberi ve marka seti: `hesap/KURULUM.md`, `hesap/gorseller/`.
+
+Değerlendirilen adaylar:
 08.11.2026 itibarıyla Instagram'da boş görünenler (kesinlik için uygulamada denenmeli):
 
 | Sayfa adı | Kullanıcı adı | Neden |

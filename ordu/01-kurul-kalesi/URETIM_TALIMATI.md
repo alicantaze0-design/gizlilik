@@ -13,7 +13,7 @@ Hikâye, sahne prompt'ları, caption ve kaynakça bu klasördeki `kurul_kalesi_b
 - Görseller: Flow, Nano Banana, Resim, 9:16, x1 (0 kredi).
 - Veo: yalnızca işaretli sahnelerde, image-to-video (ilgili still'den), 9:16, ~6–8 sn. Kredi yetmezse ya da 0 ise Veo'yu atla, Ken Burns / render_25d paralaks kullan. Toplam Veo kullanımını ve kalan krediyi raporla.
 - Seslendirme: **Pro Enceladus**, tts_pro3.py (aynı TON talimatı). İki versiyon aynı ses dosyasını kullanabilir.
-- Altyazı: ortada kalın beyaz, vurgu kelimeleri sarı (ASS + ffmpeg). Hızlı olmazsa altyazısız bırak ve söyle. Filigran koyma (sayfa adı henüz belli değil).
+- Altyazı: ortada kalın beyaz, vurgu kelimeleri sarı (ASS + ffmpeg). Hızlı olmazsa altyazısız bırak ve söyle. Filigran: sayfa adı **Ordu Defteri**. Üst ortada, ~330 px genişlik, %80 opaklık: https://raw.githubusercontent.com/alicantaze0-design/gizlilik/claude/ordu-instagram-page-a2rs30/ordu/hesap/gorseller/filigran.png
 - Müzik: alçak davul + tok yaylı. Sahne 4'te yükselsin, 5'te sussun, 6'da yumuşak açılsın. Final −14 LUFS.
 
 ## Teslim

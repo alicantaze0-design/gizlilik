@@ -1,5 +1,5 @@
 # Kurul Kalesi · Reel Bölüm Dosyası
-Sayfa: Kotyora / Ordu Defteri (ad kesinleşince filigran güncellenecek) · Hazırlık: 08.11.2026
+Sayfa: **Ordu Defteri (@ordudefteri)** · Filigran: `ordu/hesap/gorseller/filigran.png` · Hazırlık: 08.11.2026
 Format: 9:16 · 1080×1920 · ~54 sn · 8 sahne · Seslendirme: Pro Enceladus (tts_pro3) · Altyazı: ortada, kalın beyaz, anahtar kelime sarı
 
 ---
@@ -94,9 +94,8 @@ Sizce o sikkeyi Kybele'nin kucağına bırakan kişi ne diliyordu? 👇
 T.C. Kültür ve Turizm Bakanlığı Kültür Portalı — Kurul Kalesi Yerleşkesi.
 Ordu Valiliği — Kurul Kalesi kazı açıklamaları.
 
-#ordu #kurulkalesi #altınordu #melet #pontus #mithridates #kybele #arkeoloji #ordutarihi #karadeniz
+#ordu #kurulkalesi #altınordu #melet #pontus #mithridates #kybele #arkeoloji #ordutarihi #karadeniz #ordudefteri
 ```
-Sayfa adı kesinleşince sona `#kotyora` ya da `#ordudefteri` eklenecek.
 
 ## 8. Yayından önce doğrulanacaklar
 | İddia | Durum |
