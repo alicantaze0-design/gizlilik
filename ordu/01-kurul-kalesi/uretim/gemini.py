@@ -6,6 +6,8 @@ import requests
 BASE = "https://generativelanguage.googleapis.com/v1beta"
 S = requests.Session()
 S.headers["Content-Type"] = "application/json"
+_k = os.environ.get("GEMINI_API_KEY") or (open(os.environ["GEMINI_KEY_FILE"]).read().strip() if os.environ.get("GEMINI_KEY_FILE") else "")
+if _k: S.headers["x-goog-api-key"] = _k
 
 def _post(path, body, timeout=300):
     r = S.post(f"{BASE}/{path}", data=json.dumps(body), timeout=timeout)
