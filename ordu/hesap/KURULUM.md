@@ -78,7 +78,7 @@ Her gün 2–3 hikâye: anket ("Buraya hiç çıktınız mı?"), soru kutusu, ye
 
 ## 7. İlk gün yapılacaklar
 - 20–30 yerel hesabı takip edin: belediyeler, Valilik, Ordu Üniversitesi, yerel haber, ilçe sayfaları, @ordulog.
-- Kişisel hesabınızdan ve OBBKT'den değil, kişisel hesabınızdan duyuru hikâyesi paylaşın. Kurum hesabında paylaşım kurum onayına bağlı.
+- Açılış duyurusunu kişisel hesabınızdan hikâye olarak paylaşın. OBBKT hesabında paylaşmak kurum onayına bağlı.
 - Bildirimleri açın. İlk bir saat içinde her yoruma cevap verin.
 
 ## Videolar için filigran
