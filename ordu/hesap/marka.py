@@ -3,7 +3,10 @@ import io, os, re, sys
 import cairosvg
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
-FONT = sys.argv[1]; IKON = sys.argv[2]; OUT = sys.argv[3]
+_B = os.path.dirname(os.path.abspath(__file__))
+FONT = sys.argv[1] if len(sys.argv) > 3 else f"{_B}/varlik/fonts"
+IKON = sys.argv[2] if len(sys.argv) > 3 else f"{_B}/varlik/ikonlar"
+OUT = sys.argv[-1]; os.makedirs(OUT, exist_ok=True)
 KAGIT, SAYFA, MUREKKEP, SEPYA, TURKUAZ, SARI = "#F1E6CF", "#FBF5E8", "#2B2118", "#8A5A2B", "#2F6F6A", "#F2C230"
 def F(ad, b): return ImageFont.truetype(f"{FONT}/{ad}.ttf", b)
 def svg_png(svg, w, h): return Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode(), output_width=w, output_height=h))).convert("RGBA")

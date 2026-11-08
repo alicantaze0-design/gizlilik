@@ -2,13 +2,16 @@
 Girdi klasöründe şu fotoğraflar olmalı (Flow/Nano Banana ya da Gemini çıktısı):
   profil.png, oc-kaleler.png, oc-yapilar.png, oc-koy-adlari.png, oc-tiyatro.png, oc-kaynakca.png,
   bg-1.png, bg-2.png, bg-3.png
-Kullanım: python3 foto_marka.py FONT_DIR IKON_DIR GIRDI CIKTI [--uret]
+Kullanım: python3 foto_marka.py GIRDI CIKTI [--uret]  (yazı tipi ve ikonlar varlik/ klasöründen)
 --uret: eksik fotoğrafları Gemini API ile üretir (GEMINI_KEY_FILE gerekir)."""
 import io, os, re, sys, json
 import cairosvg
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
 
-FONT, IKON, GIR, OUT = sys.argv[1:5]; URET = "--uret" in sys.argv
+_B = os.path.dirname(os.path.abspath(__file__)); _a = [x for x in sys.argv[1:] if not x.startswith("--")]
+if len(_a) >= 4: FONT, IKON, GIR, OUT = _a[:4]
+else: FONT, IKON, (GIR, OUT) = f"{_B}/varlik/fonts", f"{_B}/varlik/ikonlar", _a[:2]
+URET = "--uret" in sys.argv
 ALTIN, KREM = "#E8C77A", "#F4EBDD"
 def F(ad, b): return ImageFont.truetype(f"{FONT}/{ad}.ttf", b)
 
